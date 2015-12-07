@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="Pacman">
 <head>
 	<meta charset="UTF-8">
 	<title></title>
 	<script src="lib/path-finder/ProblemSolvingAgent.js"></script>
 	<script src="lib/path-finder/Space.js"></script>
+
 	<style>
 		#svg-space {
 			/*background-image: url('img/maze.svg');*/
@@ -80,7 +81,25 @@
 	</defs>
 
 </svg>
-
+<div ng-controller="pacBoardController as controller"
+>
+	<svg id="svg-angular"
+		ng-init="controller.dimensions = {x: 20, y:20};
+		controller.wallSize ={x:15,y:15};
+		controller.bgColor='#000';
+		controller.wallColor='#a22';"
+		ng-height='{{controller.dimensions.y * controller.wallSize.y}}'
+		ng-width='{{controller.dimensions.x * controller.wallSize.x}}'
+		>
+		<rect ng-repeat="rect in controller.boardRects"
+		id="{{rect.id}}"
+		ng-x="{{rect.x}}" ng-y="{{rect.y}}" ng-height="{{rect.height}}"
+		ng-width="{{rect.width}}" fill="{{rect.fill}}" stroke="{{rect.stroke}}"
+		ng-class="{{rect.class}}"
+		>
+		</rect>
+</svg>
+</div>
 <script>
 
 //MAIN ##########################
@@ -190,5 +209,8 @@
 	};
 
 </script>
+<script type="text/javascript" src="lib/angular.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/controllers/pacBoardController.js"></script>
 </body>
 </html>
