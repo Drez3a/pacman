@@ -3,8 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
-	<script src="lib/path-finder/ProblemSolvingAgent.js"></script>
-	<script src="lib/path-finder/Space.js"></script>
+	<script src="lib/path-finder/js/ProblemSolvingAgent.js"></script>
+	<script src="lib/path-finder/js/Space.js"></script>
+	<script src="lib/path-finder/js/Agent.js"></script>
 	<style>
 		#svg-space {
 			/*background-image: url('img/maze.svg');*/
@@ -13,10 +14,10 @@
 		}
 
 		#pacman {
-			transition: transform .4s ease;
+			transition: transform .5s ease;
 		}
 
-		#img1 > image,
+		#pacman-img > image,
 		#pacman-pattern > image {
 			/*-webkit-transition: transform .3s;*/
 			/*-moz-transition: transform .3s;*/
@@ -24,7 +25,7 @@
 			/*-o-transition: transform .3s;*/
 			/*transition: transform .3s;*/
 		}
-		#img1 > image.right,
+		#pacman-img > image.right,
 		#pacman-pattern > image.right {
 			transform: translate(3px, 0);
 			animation: eat-right .2s steps(4) infinite;
@@ -34,7 +35,7 @@
 			100% { transform: translate(-44px, 0); }
 		}
 
-		#img1 > image.left,
+		#pacman-img > image.left,
 		#pacman-pattern > image.left {
 			 transform: rotate(180deg) translate(0px, 0);
 			 transform-origin: center;
@@ -46,7 +47,7 @@
 		}
 
 
-		#img1 > image.down,
+		#pacman-img > image.down,
 		#pacman-pattern > image.down {
 			transform: rotate(90deg) translate(4px, 1px);
 			transform-origin: 9px;
@@ -58,7 +59,7 @@
 		}
 
 
-		#img1 > image.up,
+		#pacman-img > image.up,
 		#pacman-pattern > image.up {
 			transform: rotate(-90deg) translate(4px, -1px);
 			transform-origin: 9px;
@@ -78,7 +79,7 @@
 	 version="1.1" baseProfile="full">
 
 	<defs>
-		<pattern id="img1" patternUnits="userSpaceOnUse" width="15" height="15">
+		<pattern id="pacman-img" patternUnits="userSpaceOnUse" width="15" height="15">
 			<image xlink:href="img/pac-eat-right.svg" class="right" width="47" height="15"/>
 		</pattern>
 	</defs>
@@ -118,9 +119,10 @@
 	};
 
 	PacmanAgent.prototype = Object.create(Agent.prototype);
+	PacmanAgent.prototype.constructor = PacmanAgent;
 
 	PacmanAgent.prototype.drawInSpace = function(space) {
-		this.element = space.createElement(this.name, this.state, 'url(#img1)');
+		this.element = space.createElement(this.name, this.state, 'url(#pacman-img)');
 		this.stopSpriteAnimation();
 	};
 
@@ -208,7 +210,7 @@
 
 							pacmanAgent.state = nextState;
 
-							window.setTimeout(move, 225);
+							window.setTimeout(move, 250);
 							return true;
 						} else {
 							gameOn = false;

@@ -1,0 +1,3 @@
+[submodule "lib/path-finder"]
+	path = lib/path-finder
+	url = git@github.com:karlafalcao/astar-search-algorithm.git
