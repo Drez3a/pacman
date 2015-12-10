@@ -3,14 +3,21 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
+	<script src="lib/path-finder/js/Point.js"></script>
 	<script src="lib/path-finder/js/ProblemSolvingAgent.js"></script>
 	<script src="lib/path-finder/js/Space.js"></script>
 	<script src="lib/path-finder/js/Agent.js"></script>
+	<script src="js/gameAgents.js"></script>
+	<script src="js/main.js"></script>
+	<script src="data/maze0.js"></script>
+	<!--<script src="lib/path-finder/js/Agent.js"></script>-->
 	<style>
 		#svg-space {
-			/*background-image: url('img/maze.svg');*/
-			background-position: 13px;
+			background-image: url('img/maze.svg');
+			background-position: 0;
+			background-size: auto 100%;
 			background-repeat: no-repeat;
+			background-color: #000;
 		}
 
 		#pacman {
@@ -95,9 +102,8 @@
 	function startSpace() {
 
 		if (Space) {
-			var walls = JSON.parse('[{"x":0,"y":10},{"x":0,"y":12},{"x":19,"y":7},{"x":12,"y":7},{"x":13,"y":12},{"x":13,"y":13},{"x":13,"y":16},{"x":13,"y":17},{"x":9,"y":9},{"x":10,"y":9},{"x":6,"y":5},{"x":6,"y":7},{"x":6,"y":6},{"x":6,"y":8},{"x":7,"y":7},{"x":8,"y":9},{"x":8,"y":10},{"x":9,"y":10},{"x":10,"y":10},{"x":11,"y":10},{"x":11,"y":9},{"x":9,"y":6},{"x":9,"y":5},{"x":10,"y":5},{"x":8,"y":5},{"x":11,"y":7},{"x":12,"y":6},{"x":12,"y":5},{"x":15,"y":5},{"x":14,"y":5},{"x":16,"y":5},{"x":15,"y":5},{"x":17,"y":5},{"x":18,"y":7},{"x":17,"y":7},{"x":15,"y":7},{"x":15,"y":8},{"x":15,"y":9},{"x":17,"y":9},{"x":16,"y":9},{"x":13,"y":11},{"x":13,"y":10},{"x":4,"y":11},{"x":3,"y":10},{"x":1,"y":10},{"x":2,"y":10},{"x":4,"y":10},{"x":4,"y":12},{"x":3,"y":12},{"x":2,"y":12},{"x":1,"y":12},{"x":15,"y":11},{"x":15,"y":12},{"x":16,"y":11},{"x":17,"y":11},{"x":18,"y":11},{"x":18,"y":9},{"x":16,"y":14},{"x":15,"y":14},{"x":15,"y":16},{"x":15,"y":15},{"x":13,"y":18},{"x":15,"y":17},{"x":15,"y":18},{"x":8,"y":12},{"x":10,"y":12},{"x":9,"y":12},{"x":9,"y":13},{"x":11,"y":12},{"x":7,"y":12},{"x":6,"y":12},{"x":6,"y":14},{"x":7,"y":14},{"x":3,"y":14},{"x":4,"y":14},{"x":4,"y":15},{"x":6,"y":16},{"x":6,"y":17},{"x":5,"y":17},{"x":4,"y":17},{"x":3,"y":17},{"x":7,"y":17},{"x":10,"y":17},{"x":10,"y":16},{"x":9,"y":14},{"x":11,"y":14},{"x":11,"y":15},{"x":11,"y":16},{"x":11,"y":17},{"x":10,"y":18},{"x":11,"y":18},{"x":7,"y":18},{"x":6,"y":18},{"x":5,"y":18},{"x":4,"y":18},{"x":3,"y":18},{"x":6,"y":2},{"x":7,"y":2},{"x":10,"y":1},{"x":10,"y":2},{"x":10,"y":3},{"x":10,"y":0},{"x":12,"y":2},{"x":12,"y":3},{"x":14,"y":3},{"x":13,"y":3},{"x":14,"y":2},{"x":16,"y":2},{"x":18,"y":2},{"x":17,"y":3},{"x":16,"y":3},{"x":18,"y":3},{"x":2,"y":2},{"x":3,"y":2},{"x":4,"y":2},{"x":1,"y":2},{"x":1,"y":1},{"x":2,"y":1},{"x":3,"y":1},{"x":4,"y":1},{"x":6,"y":1},{"x":7,"y":1},{"x":8,"y":1},{"x":8,"y":2},{"x":6,"y":4},{"x":2,"y":4},{"x":4,"y":4},{"x":3,"y":4},{"x":1,"y":4},{"x":1,"y":6},{"x":2,"y":6},{"x":3,"y":6},{"x":4,"y":6},{"x":4,"y":7},{"x":4,"y":8},{"x":3,"y":8},{"x":2,"y":8},{"x":1,"y":8},{"x":1,"y":7},{"x":12,"y":1},{"x":14,"y":1},{"x":13,"y":1},{"x":16,"y":1},{"x":18,"y":1},{"x":17,"y":1},{"x":2,"y":14},{"x":1,"y":17},{"x":1,"y":18},{"x":1,"y":16},{"x":3,"y":15},{"x":16,"y":15},{"x":17,"y":15},{"x":17,"y":14},{"x":17,"y":16},{"x":17,"y":17},{"x":17,"y":18},{"x":16,"y":18},{"x":19,"y":14},{"x":19,"y":15},{"x":19,"y":16},{"x":19,"y":17},{"x":19,"y":18},{"x":1,"y":14},{"x":6,"y":9},{"x":6,"y":10}]');
 
-			space = new Space('http://www.w3.org/2000/svg', 15, new Point(20, 20), 0, '#000', walls);
+			space = new Space('http://www.w3.org/2000/svg', 15, new Point(28, 31), 0, 'transparent', maze0);
 
 			space.draw();
 
@@ -105,7 +111,7 @@
 			space.bindKeyEvents();
 			space.drawWalls();
 
-			pacmanAgent = new PacmanAgent('pacman', new Point(0,0), '#F4D100');
+			pacmanAgent = new PacmanAgent('pacman', new Point(13,17), 'url(#pacman-img)');
 			pacmanAgent.drawInSpace(space);
 //			pacmanAgent.bindDragNDrop(space);
 		}
@@ -113,129 +119,6 @@
 
 		return space;
 	}
-
-	function PacmanAgent(a,b,c) {
-		Agent.call(this, a,b,c);
-	};
-
-	PacmanAgent.prototype = Object.create(Agent.prototype);
-	PacmanAgent.prototype.constructor = PacmanAgent;
-
-	PacmanAgent.prototype.drawInSpace = function(space) {
-		this.element = space.createElement(this.name, this.state, 'url(#pacman-img)');
-		this.stopSpriteAnimation();
-	};
-
-	PacmanAgent.prototype.drawSymbol = function(space){
-
-		var defs = document.createElementNS(this.svg, 'defs');
-
-		var pattern = document.createElementNS(this.svg, 'pattern');
-		pattern.setAttributeNS(null, 'id', 'pacman-patt');
-		pattern.setAttributeNS(null, 'patternUnits', 'userSpaceOnUse');
-		pattern.setAttributeNS(null, 'height', '20');
-		pattern.setAttributeNS(null, 'width', '20');
-		defs.appendChild(pattern);
-
-		var image = document.createElementNS(this.svg, 'image');
-		image.setAttributeNS(null, 'height', '20');
-		image.setAttributeNS(null, 'width', '50');
-		image.setAttributeNS(null, 'class', 'left');
-		image.setAttribute('xmlns:xlink', 'img/pac-eat-right.svg');
-
-		pattern.appendChild(image);
-
-		document.getElementById('svg-space').appendChild(defs);
-	};
-
-	Space.prototype.bindKeyEvents = function() {
-		var space = this;
-		var gameOn = false;
-		var interval;
-		var keyPressed = null;
-		var keyCode;
-		var keyAction;
-		var previousAction;
-		var nextAction;
-		var KEY_ACTIONS = {
-			37: 'left',
-			38: 'up',
-			39: 'right',
-			40: 'down',
-		};
-
-		//Register the keydown event handler For pacman's movements
-		document.addEventListener('keydown', onKeyDown);
-		document.addEventListener('keyup', onKeyUp);
-
-		function onKeyDown (e) {
-			var evt = e ? e : event;
-			keyCode = evt.keyCode;
-
-			if (KEY_ACTIONS[keyCode] && (!keyPressed || keyPressed !== keyCode) && pacmanAgent) {
-				evt.preventDefault();
-				keyAction = KEY_ACTIONS[keyCode];
-				nextAction = ACTIONS[keyAction];
-
-				if (!gameOn) {
-					gameOn = true;
-
-					var move = function () {
-//						console.log(keyAction);
-						var nextState = pacmanAgent.state.add(nextAction.state);
-
-						var path = space.moveFromTo(pacmanAgent.element, pacmanAgent.state, nextState);
-
-						if (path.length > 0) {
-							previousAction = nextAction;
-						} else if (previousAction) {
-
-							nextState = pacmanAgent.state.add(previousAction.state);
-
-							path = space.moveFromTo(pacmanAgent.element, pacmanAgent.state, nextState);
-						}
-
-						if (pacmanAgent.element && path.length > 0) {
-
-							for (var i = 0; i < path.length-1; i++) {
-								var node = path[i];
-								var toX = String(nextState.x*space.scale+space.border);
-								var toY = String(nextState.y*space.scale+space.border);
-
-								pacmanAgent.element.style.transform = 'translate('+toX+'px, '+toY+'px)';
-
-								pacmanAgent.animateSprite(node.action);
-
-							}
-
-							pacmanAgent.state = nextState;
-
-							window.setTimeout(move, 250);
-							return true;
-						} else {
-							gameOn = false;
-							pacmanAgent.stopSpriteAnimation();
-							return false;
-						}
-					};
-
-					move();
-				}
-
-				keyPressed = keyCode;
-
-				return false;
-			}
-
-			return true;
-		};
-
-
-		function onKeyUp (e) {
-			var evt = e ? e : event;
-			keyPressed = null;
-		};
-	};
 
 </script>
 </body>
