@@ -1,4 +1,4 @@
-var maze0 = [
+var maze0Data = [
   {
     "x": 0,
     "y": 19

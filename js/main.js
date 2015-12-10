@@ -29,8 +29,9 @@ Space.prototype.bindKeyEvents = function() {
 			keyAction = KEY_ACTIONS[keyCode];
 			nextAction = ACTIONS[keyAction];
 
-			if (!gameOn) {
-				gameOn = true;
+			//if (!gameOn) {
+			//	gameOn = true;
+				window.clearTimeout(interval);
 
 				var move = function () {
 //						console.log(keyAction);
@@ -62,7 +63,7 @@ Space.prototype.bindKeyEvents = function() {
 
 						pacmanAgent.state = nextState;
 
-						window.setTimeout(move, 250);
+						interval = window.setTimeout(move, 250);
 						return true;
 					} else {
 						gameOn = false;
@@ -72,7 +73,10 @@ Space.prototype.bindKeyEvents = function() {
 				};
 
 				move();
-			}
+			//} else {
+			//	window.clearTimeout(interval);
+			//	move();
+			//}
 
 			keyPressed = keyCode;
 
@@ -85,6 +89,6 @@ Space.prototype.bindKeyEvents = function() {
 
 	function onKeyUp (e) {
 		var evt = e ? e : event;
-		keyPressed = null;
+		//keyPressed = null;
 	};
 };

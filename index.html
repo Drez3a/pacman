@@ -10,6 +10,7 @@
 	<script src="js/gameAgents.js"></script>
 	<script src="js/main.js"></script>
 	<script src="data/maze0.js"></script>
+	<script src="data/pacdots.js"></script>
 	<!--<script src="lib/path-finder/js/Agent.js"></script>-->
 	<style>
 		#svg-space {
@@ -86,8 +87,11 @@
 	 version="1.1" baseProfile="full">
 
 	<defs>
-		<pattern id="pacman-img" patternUnits="userSpaceOnUse" width="15" height="15">
+		<pattern id="pacman-pattern" patternUnits="userSpaceOnUse" width="15" height="15">
 			<image xlink:href="img/pac-eat-right.svg" class="right" width="47" height="15"/>
+		</pattern>
+		<pattern id="pacdot-pattern" patternUnits="userSpaceOnUse" width="15" height="15">
+			<image xlink:href="img/pacdot.svg" x="6" y="6" width="3" height="3"/>
 		</pattern>
 	</defs>
 
@@ -103,7 +107,7 @@
 
 		if (Space) {
 
-			space = new Space('http://www.w3.org/2000/svg', 15, new Point(28, 31), 0, 'transparent', maze0);
+			space = new Space('http://www.w3.org/2000/svg', 15, new Point(28, 31), 0, 'transparent', maze0Data);
 
 			space.draw();
 
@@ -111,9 +115,13 @@
 			space.bindKeyEvents();
 			space.drawWalls();
 
-			pacmanAgent = new PacmanAgent('pacman', new Point(13,17), 'url(#pacman-img)');
-			pacmanAgent.drawInSpace(space);
+			pacmanAgent = new PacmanAgent('pacman', new Point(13,17), 'url(#pacman-pattern)', space);
+			pacmanAgent.draw();
 //			pacmanAgent.bindDragNDrop(space);
+
+			gameAgents.pacDots = new PacDotCollection(space);
+			gameAgents.pacDots.insertAll(pacDotsData);
+			gameAgents.pacDots.draw();
 		}
 
 
