@@ -29,9 +29,8 @@ Space.prototype.bindKeyEvents = function() {
 			keyAction = KEY_ACTIONS[keyCode];
 			nextAction = ACTIONS[keyAction];
 
-			//if (!gameOn) {
-			//	gameOn = true;
-				window.clearTimeout(interval);
+			if (!gameOn) {
+				gameOn = true;
 
 				var move = function () {
 //						console.log(keyAction);
@@ -59,11 +58,13 @@ Space.prototype.bindKeyEvents = function() {
 
 							pacmanAgent.animateSprite(node.action);
 
+							pacmanAgent.state = nextState;
+
+							pacmanAgent.broadcast('move', pacmanAgent)
 						}
 
-						pacmanAgent.state = nextState;
 
-						interval = window.setTimeout(move, 250);
+						window.setTimeout(move, 250);
 						return true;
 					} else {
 						gameOn = false;
@@ -73,10 +74,7 @@ Space.prototype.bindKeyEvents = function() {
 				};
 
 				move();
-			//} else {
-			//	window.clearTimeout(interval);
-			//	move();
-			//}
+			}
 
 			keyPressed = keyCode;
 
@@ -84,11 +82,25 @@ Space.prototype.bindKeyEvents = function() {
 		}
 
 		return true;
+
 	};
 
 
 	function onKeyUp (e) {
 		var evt = e ? e : event;
-		//keyPressed = null;
+		keyPressed = null;
 	};
 };
+
+
+gameAgents.bindPacmanMove = function(){
+	pacmanAgent.on('move', onPacmanMove);
+
+
+	function onPacmanMove(e){
+		console.log(e.detail);
+		window.setTimeout(function(){
+			gameAgents.pacDots.remove(e.detail.state.x, e.detail.state.y);
+		}, 200);
+	}
+}

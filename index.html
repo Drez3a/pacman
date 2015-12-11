@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<script src="lib/path-finder/js/Point.js"></script>
-	<script src="lib/path-finder/js/ProblemSolvingAgent.js"></script>
+	<script src="lib/path-finder/js/PathFinder.js"></script>
 	<script src="lib/path-finder/js/Space.js"></script>
 	<script src="lib/path-finder/js/Agent.js"></script>
 	<script src="js/gameAgents.js"></script>
@@ -115,13 +115,23 @@
 			space.bindKeyEvents();
 			space.drawWalls();
 
-			pacmanAgent = new PacmanAgent('pacman', new Point(13,17), 'url(#pacman-pattern)', space);
+			pacmanAgent = new PacmanAgent('pacman', 13, 17, 'url(#pacman-pattern)', space);
 			pacmanAgent.draw();
-//			pacmanAgent.bindDragNDrop(space);
+			//pacmanAgent.bindDragNDrop(space);
+			gameAgents.bindPacmanMove();
 
+			//######## Add Pacdots
 			gameAgents.pacDots = new PacDotCollection(space);
-			gameAgents.pacDots.insertAll(pacDotsData);
-			gameAgents.pacDots.draw();
+
+			//Insert pacdots in the maze
+			for (var i=0; i < pacDotsData.length; i++) {
+				var x = pacDotsData[i].x;
+				var y = pacDotsData[i].y;
+				var pacdot = new Meal('pac-dot', 10, x, y, 'url(#pacdot-pattern)', space);
+				gameAgents.pacDots.insert(pacdot);
+				pacdot.draw();
+			}
+
 		}
 
 

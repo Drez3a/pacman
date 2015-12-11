@@ -3,10 +3,8 @@
 
 //$PacmanAgent
 
-function PacmanAgent(a,b,c, space) {
-	Agent.call(this, a,b,c);
-
-	this.space = space || new Space();
+function PacmanAgent(name, x, y, color, space) {
+	Agent.call(this, name, x, y, color, space);
 };
 
 PacmanAgent.prototype = Object.create(Agent.prototype);
@@ -60,19 +58,14 @@ PacmanAgent.prototype.drawSymbol = function(){
 
 //$Meal prototype class
 
-function Meal(name, value, state, color, space) {
-	Agent.call(this, name, state, color);
+function Meal(name, value, x, y, color, space) {
+	Agent.call(this, name, x, y, color, space);
 	this.value = value || 10;
-	this.space = space || new Space();
 }
 
 Meal.prototype = Object.create(Agent.prototype);
 
 Meal.prototype.constructor = Meal;
-
-Meal.prototype.draw = function() {
-	this.element = this.space.createElement(this.name, this.state, this.color);
-};
 
 // $PacDotCollection
 function PacDotCollection(space) {
@@ -93,21 +86,34 @@ PacDotCollection.prototype.getScore = function() {
 	})
 };
 
+PacDotCollection.prototype.remove = function(x, y) {
+	var self = this;
+	var point = new Point(x, y);
+	this.queue = this.queue.filter(function(item) {
+		if (item.state.equalsTo(point)) {
+			self.removeElement(item.element);
+			return false;
+		}
+		return true;
+	});
+
+};
+
+PacDotCollection.prototype.removeElement = function(element){
+	this.space.removeElement(element);
+};
+
 PacDotCollection.prototype.get = function(x, y) {
 	var point = new Point(x, y);
 
-	return this.queue.find(function(state){
-		return state.equalsTo(point);
+	return this.queue.find(function(item){
+		return item.state.equalsTo(point);
 	}) || false;
 };
 
-PacDotCollection.prototype.insert = function(state){
-	var pacDot = this.createObject(state);
-	Queue.prototype.insert.apply(this, [pacDot]);
-};
 
-PacDotCollection.prototype.createObject = function(state){
-	return new Meal('pac-dot', 10, new Point(state.x, state.y), 'url(#pacdot-pattern)', this.space);
+PacDotCollection.prototype.isColliding = function(x, y) {
+	return this.get(x, y) ? true : false;
 };
 
 PacDotCollection.prototype.draw = function () {
