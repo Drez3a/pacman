@@ -3,14 +3,15 @@
 
 //$PacmanAgent
 
-function PacmanAgent(name, x, y, color, space) {
+function PacmanAgent(name, value, x, y, color, space) {
 	Agent.call(this, name, x, y, color, space);
+	this.value = value;
 };
 
 PacmanAgent.prototype = Object.create(Agent.prototype);
 PacmanAgent.prototype.constructor = PacmanAgent;
 
-PacmanAgent.prototype.draw = function() {
+PacmanAgent.prototype.draw = function(cssClass) {
 
 	var toX = String(this.state.x*this.space.scale+this.space.border);
 	var toY = String(this.state.y*this.space.scale+this.space.border);
@@ -23,7 +24,7 @@ PacmanAgent.prototype.draw = function() {
 	rect.setAttributeNS(null, 'fill', this.color);
 	rect.setAttributeNS(null, 'stroke', '#' + '000');
 	rect.setAttributeNS(null, 'stroke-width', '2');
-	rect.setAttributeNS(null, 'class',  'agent');
+	rect.setAttributeNS(null, 'class',  cssClass || 'agent');
 
 	rect.style.transform = 'translate('+toX+'px, '+toY+'px)';
 
@@ -34,8 +35,32 @@ PacmanAgent.prototype.draw = function() {
 	this.stopSpriteAnimation();
 };
 
-PacmanAgent.prototype.bindMove = function(onPacmanMove){
-	this.on('move', onPacmanMove);
+PacmanAgent.prototype.bindMove = function(onMove) {
+	this.on('move', onMove);
+};
+
+PacmanAgent.prototype.move = function(path) {
+
+	if (this.element && path.length > 0) {
+
+		for (var i = 0; i < path.length-1; i++) {
+			var node = path[i];
+			this.element.setAttributeNS(null, 'x', String(node.state.x*space.scale+space.border));
+			this.element.setAttributeNS(null, 'y', String(node.state.y*space.scale+space.border));
+
+			this.animateSprite(node.action);
+
+			this.state = node.state;
+
+			this.broadcast('move', this);
+		}
+
+	} else {
+		this.stopSpriteAnimation();
+	}
+
+
+	return this.state;
 };
 
 //$Meal prototype class

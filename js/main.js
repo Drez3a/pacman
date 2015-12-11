@@ -22,7 +22,7 @@ function startSpace() {
 		gameAgents.scoreSystem = new ScoreSystem();
 
 		//pacmanAgent
-		gameAgents.pacmanAgent = new PacmanAgent('pacman', 13, 17, 'url(#pacman-pattern)', space);
+		gameAgents.pacmanAgent = new PacmanAgent('pacman', 0, 13, 17, 'url(#pacman-pattern)', space);
 		gameAgents.pacmanAgent.draw();
 
 		//Event, binds pacman's movement
@@ -58,7 +58,7 @@ function startSpace() {
 			}
 		}
 
-		// Add PowerPellet
+		// Add PowerPellets
 		gameAgents.powerPallets = new AgentCollection(space);
 
 		gameAgents.powerPalletsEaten = new AgentCollection(space);
@@ -71,6 +71,27 @@ function startSpace() {
 				var powerpellet = new Meal('power-pellet', 50, x, y, 'url(#powerpellet-pattern)', space);
 				gameAgents.powerPallets.insert(powerpellet);
 				powerpellet.draw();
+			}
+		}
+
+		// Handle Ghosts
+		gameAgents.ghosts = new AgentCollection(space);
+
+		// Insert powerpellets in the maze
+		//the red ghost, Blinky, doggedly pursues Pac-Man;
+		//the pink ghost, Pinky, tries to ambush Pac-Man by moving parallel to him;
+		//the cyan ghost, Inky, tends not to chase Pac-Man directly unless Blinky is near;
+		//the orange ghost, Clyde, pursues Pac-Man when far from him, but usually wanders away when he gets close.
+		if (ghostsData) {
+			for (var i=0; i < ghostsData.length; i++) {
+				var name = ghostsData[i].name;
+				var x = ghostsData[i].x;
+				var y = ghostsData[i].y;
+				var ghost = new PacmanAgent('ghost-'+name , 200, x, y, 'url(#ghost-'+name+'-pattern)', space);
+				ghost.draw('ghost');
+				gameAgents.ghosts.insert(ghost);
+				//var path = space.moveFromTo(ghost.element, ghost.state, gameAgents.pacmanAgent.state);
+				//ghost.move(path);
 			}
 		}
 	}
@@ -138,9 +159,11 @@ Space.prototype.bindKeyEvents = function() {
 							gameAgents.pacmanAgent.animateSprite(node.action);
 
 							gameAgents.pacmanAgent.state = nextState;
-
-
+							//TODO put current state
+							gameAgents.pacmanAgent.broadcast('move', gameAgents.pacmanAgent);
 						}
+
+
 						gameAgents.pacmanAgent.broadcast('move', gameAgents.pacmanAgent);
 
 						interval = window.setTimeout(move, 200);
@@ -161,9 +184,7 @@ Space.prototype.bindKeyEvents = function() {
 		}
 
 		return true;
-
 	};
-
 
 	function onKeyUp (e) {
 		var evt = e ? e : event;

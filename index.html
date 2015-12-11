@@ -13,6 +13,7 @@
 	<script src="data/maze0.js"></script>
 	<script src="data/pacdots.js"></script>
 	<script src="data/powerpellets.js"></script>
+	<script src="data/ghosts.js"></script>
 	<style>
 		#svg-space {
 			background-image: url('img/maze.svg');
@@ -25,8 +26,25 @@
 		#pacman {
 			transition: transform .5s ease;
 		}
+		
+		#ghost-blinky-pattern > image.right {
+			transform: translate(0, 0);
+		}
 
-		#pacman-img > image,
+		#ghost-blinky-pattern > image.left {
+			transform: translate(-17px, 0);
+		}
+
+
+		#ghost-blinky-pattern > image.down {
+			transform: translate(-34px, 0);
+		}
+
+
+		#ghost-blinky-pattern > image.up {
+			transform: translate(-51px, 0);
+		}
+
 		#pacman-pattern > image {
 			/*-webkit-transition: transform .3s;*/
 			/*-moz-transition: transform .3s;*/
@@ -34,7 +52,6 @@
 			/*-o-transition: transform .3s;*/
 			/*transition: transform .3s;*/
 		}
-		#pacman-img > image.right,
 		#pacman-pattern > image.right {
 			transform: translate(3px, 0);
 			animation: eat-right .2s steps(4) infinite;
@@ -44,7 +61,6 @@
 			100% { transform: translate(-44px, 0); }
 		}
 
-		#pacman-img > image.left,
 		#pacman-pattern > image.left {
 			 transform: rotate(180deg) translate(0px, 0);
 			 transform-origin: center;
@@ -56,7 +72,6 @@
 		}
 
 
-		#pacman-img > image.down,
 		#pacman-pattern > image.down {
 			transform: rotate(90deg) translate(4px, 1px);
 			transform-origin: 9px;
@@ -68,7 +83,6 @@
 		}
 
 
-		#pacman-img > image.up,
 		#pacman-pattern > image.up {
 			transform: rotate(-90deg) translate(4px, -1px);
 			transform-origin: 9px;
@@ -90,6 +104,9 @@
 	<defs>
 		<pattern id="pacman-pattern" patternUnits="userSpaceOnUse" width="15" height="15">
 			<image xlink:href="img/pac-eat-right.svg" class="right" width="47" height="15"/>
+		</pattern>
+		<pattern id="ghost-blinky-pattern" patternUnits="userSpaceOnUse" width="15" height="15">
+			<image xlink:href="img/ghost-blinky.svg" class="right" width="68" height="15"/>
 		</pattern>
 		<pattern id="pacdot-pattern" patternUnits="userSpaceOnUse" width="15" height="15">
 			<image xlink:href="img/pacdot.svg" x="6" y="6" width="3" height="3"/>
