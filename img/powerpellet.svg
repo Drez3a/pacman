@@ -9,13 +9,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="0.98777777mm"
-   height="0.98777777mm"
-   viewBox="0 0 3.5 3.5"
+   width="3.1044445mm"
+   height="3.1044445mm"
+   viewBox="0 0 11 11"
    id="svg8799"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="pacdot.svg">
+   sodipodi:docname="powerpellet.svg">
   <defs
      id="defs8801" />
   <sodipodi:namedview
@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.4"
-     inkscape:cx="2.1657823"
-     inkscape:cy="3.5127346"
+     inkscape:cx="-0.98154572"
+     inkscape:cy="3.5127374"
      inkscape:document-units="px"
      inkscape:current-layer="layer3"
      showgrid="false"
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,18 +56,18 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-582.76788,-787.79071)" />
+     transform="translate(-582.76788,-781.36212)" />
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Layer 2"
-     transform="translate(-582.76788,-787.79071)">
+     transform="translate(-582.76788,-781.36212)">
     <circle
        style="fill:#fab9b0;fill-opacity:1;stroke:none;stroke-width:1.24199998;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:0.94117647"
        id="path9490"
-       cx="584.51788"
-       cy="-789.54071"
+       cx="588.26788"
+       cy="-786.86212"
        transform="scale(1,-1)"
-       r="1.75" />
+       r="5.5" />
   </g>
 </svg>

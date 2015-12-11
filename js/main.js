@@ -25,21 +25,37 @@ function startSpace() {
 		gameAgents.pacmanAgent.bindMove(function onPacmanMove(e){
 			window.setTimeout(function(){
 				gameAgents.pacDots.removeItem(e.detail.state.x, e.detail.state.y);
-			}, 200);
+				gameAgents.powerPallets.removeItem(e.detail.state.x, e.detail.state.y);
+			}, 250);
 		});
 
 		// Add Pacdots
 		gameAgents.pacDots = new AgentCollection(space);
 
 		// Insert pacdots in the maze
-		for (var i=0; i < pacDotsData.length; i++) {
-			var x = pacDotsData[i].x;
-			var y = pacDotsData[i].y;
-			var pacdot = new Meal('pac-dot', 10, x, y, 'url(#pacdot-pattern)', space);
-			gameAgents.pacDots.insert(pacdot);
-			pacdot.draw();
+		if (pacDotsData) {
+			for (var i=0; i < pacDotsData.length; i++) {
+				var x = pacDotsData[i].x;
+				var y = pacDotsData[i].y;
+				var pacdot = new Meal('pac-dot', 10, x, y, 'url(#pacdot-pattern)', space);
+				gameAgents.pacDots.insert(pacdot);
+				pacdot.draw();
+			}
 		}
 
+		// Add PowerPellet
+		gameAgents.powerPallets = new AgentCollection(space);
+
+		// Insert powerpellets in the maze
+		if (powerPelletsData) {
+			for (var i=0; i < powerPelletsData.length; i++) {
+				var x = powerPelletsData[i].x;
+				var y = powerPelletsData[i].y;
+				var powerpellet = new Meal('power-pellet', 10, x, y, 'url(#powerpellet-pattern)', space);
+				gameAgents.powerPallets.insert(powerpellet);
+				powerpellet.draw();
+			}
+		}
 	}
 
 

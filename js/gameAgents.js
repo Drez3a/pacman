@@ -75,7 +75,7 @@ AgentCollection.prototype.removeItem = function(x, y) {
 		}
 		return true;
 	});
-}
+};
 
 AgentCollection.prototype.eat = function(item) {
 	var item = this.remove(item.x, item.y);
@@ -132,7 +132,7 @@ AgentCollection.prototype.draw = function () {
 //#3 in succession - 800 points. [TODO]
 //#4 in succession - 1600 points. [TODO]
 //Fruit:
-//	Cherry: 100 points. [TODO]
+//Cherry: 100 points. [TODO]
 //Strawberry: 300 points [TODO]
 //Orange: 500 points [TODO]
 //Apple: 700 points [TODO]
