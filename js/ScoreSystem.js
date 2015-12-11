@@ -11,9 +11,5 @@ function ScoreSystem(){
 }
 
 ScoreSystem.prototype.count = function (agents) {
-	for (var agent in agents) {
-		if (agent.isColliding()) {
-			//Handle (Call) function that count value for each agentCollection
-		}
-	}
+
 };

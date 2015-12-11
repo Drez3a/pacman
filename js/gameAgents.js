@@ -34,30 +34,12 @@ PacmanAgent.prototype.draw = function() {
 	this.stopSpriteAnimation();
 };
 
-PacmanAgent.prototype.drawSymbol = function(){
-
-	var defs = document.createElementNS(this.svg, 'defs');
-
-	var pattern = document.createElementNS(this.svg, 'pattern');
-	pattern.setAttributeNS(null, 'id', 'pacman-patt');
-	pattern.setAttributeNS(null, 'patternUnits', 'userSpaceOnUse');
-	pattern.setAttributeNS(null, 'height', '20');
-	pattern.setAttributeNS(null, 'width', '20');
-	defs.appendChild(pattern);
-
-	var image = document.createElementNS(this.svg, 'image');
-	image.setAttributeNS(null, 'height', '20');
-	image.setAttributeNS(null, 'width', '50');
-	image.setAttributeNS(null, 'class', 'left');
-	image.setAttribute('xmlns:xlink', 'img/pac-eat-right.svg');
-
-	pattern.appendChild(image);
-
-	document.getElementById('svg-space').appendChild(defs);
+PacmanAgent.prototype.bindMove = function(onPacmanMove){
+	this.on('move', onPacmanMove);
 };
 
 //$Meal prototype class
-
+//Agents that have value
 function Meal(name, value, x, y, color, space) {
 	Agent.call(this, name, x, y, color, space);
 	this.value = value || 10;
@@ -67,43 +49,51 @@ Meal.prototype = Object.create(Agent.prototype);
 
 Meal.prototype.constructor = Meal;
 
-// $PacDotCollection
-function PacDotCollection(space) {
+// $AgentCollection
+// Set a collection of agents
+function AgentCollection(space) {
 	Queue.call(this);
 
 	this.space = space || new Space();
-	this.eaten = [];
-
 }
 
-PacDotCollection.prototype.constructor = PacDotCollection;
+AgentCollection.prototype.constructor = AgentCollection;
 
-PacDotCollection.prototype = Object.create(Queue.prototype);
+AgentCollection.prototype = Object.create(Queue.prototype);
 
-PacDotCollection.prototype.getScore = function() {
-	return this.eaten.reduce(function(prev, next){
-		return prev.value+next.value;
-	})
+AgentCollection.prototype.getTotalValue = function() {
+	return this.queue.length * this.queue.first().value;
 };
 
-PacDotCollection.prototype.remove = function(x, y) {
+AgentCollection.prototype.removeItem = function(x, y) {
 	var self = this;
 	var point = new Point(x, y);
-	this.queue = this.queue.filter(function(item) {
+	this.queue = this.queue.filter(function (item) {
 		if (item.state.equalsTo(point)) {
-			self.removeElement(item.element);
+			self.removeDOMElement(item.element);
 			return false;
 		}
 		return true;
 	});
+}
 
+AgentCollection.prototype.eat = function(item) {
+	var item = this.remove(item.x, item.y);
+	if (item !== -1) {
+		this.removeDOMElement(item.element);
+	}
 };
 
-PacDotCollection.prototype.removeElement = function(element){
-	this.space.removeElement(element);
+AgentCollection.prototype.remove = function(x, y) {
+	var index = this.getIndex(x,y);
+	return this.queue.splice(index, 1)[0];
 };
 
-PacDotCollection.prototype.get = function(x, y) {
+AgentCollection.prototype.removeDOMElement = function(element){
+	this.space.removeDOMElement(element);
+};
+
+AgentCollection.prototype.get = function(x, y) {
 	var point = new Point(x, y);
 
 	return this.queue.find(function(item){
@@ -111,12 +101,19 @@ PacDotCollection.prototype.get = function(x, y) {
 	}) || false;
 };
 
+AgentCollection.prototype.getIndex = function(x, y) {
+	var point = new Point(x, y);
 
-PacDotCollection.prototype.isColliding = function(x, y) {
+	return this.queue.findIndex(function(item){
+		return item.state.equalsTo(point);
+	});
+};
+
+AgentCollection.prototype.isColliding = function(x, y) {
 	return this.get(x, y) ? true : false;
 };
 
-PacDotCollection.prototype.draw = function () {
+AgentCollection.prototype.draw = function () {
 
 	for (var i = 0; i < this.queue.length; i++) {
 		var object = this.queue[i];
@@ -143,9 +140,4 @@ PacDotCollection.prototype.draw = function () {
 //Galxian Boss: 2000 points [TODO]
 //Bell: 3000 points [TODO]
 //Key: 5000 points [TODO]
-
-
-//#gameAgents module
-
-var gameAgents = gameAgents || {};
 

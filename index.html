@@ -96,48 +96,5 @@
 	</defs>
 
 </svg>
-
-<script>
-
-//MAIN ##########################
-	var space;
-	var pacmanAgent;
-
-	function startSpace() {
-
-		if (Space) {
-
-			space = new Space('http://www.w3.org/2000/svg', 15, new Point(28, 31), 0, 'transparent', maze0Data);
-
-			space.draw();
-
-			space.bindClickEvent();
-			space.bindKeyEvents();
-			space.drawWalls();
-
-			pacmanAgent = new PacmanAgent('pacman', 13, 17, 'url(#pacman-pattern)', space);
-			pacmanAgent.draw();
-			//pacmanAgent.bindDragNDrop(space);
-			gameAgents.bindPacmanMove();
-
-			//######## Add Pacdots
-			gameAgents.pacDots = new PacDotCollection(space);
-
-			//Insert pacdots in the maze
-			for (var i=0; i < pacDotsData.length; i++) {
-				var x = pacDotsData[i].x;
-				var y = pacDotsData[i].y;
-				var pacdot = new Meal('pac-dot', 10, x, y, 'url(#pacdot-pattern)', space);
-				gameAgents.pacDots.insert(pacdot);
-				pacdot.draw();
-			}
-
-		}
-
-
-		return space;
-	}
-
-</script>
 </body>
 </html>

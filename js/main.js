@@ -1,5 +1,51 @@
 "use strict";
 
+//#gameAgents module
+var gameAgents = {};
+
+var space;
+
+function startSpace() {
+
+	if (gameAgents && Space) {
+
+		space = new Space('http://www.w3.org/2000/svg', 15, new Point(28, 31), 0, 'transparent', maze0Data);
+
+		space.draw();
+
+		space.bindClickEvent();
+		space.bindKeyEvents();
+		space.drawWalls();
+
+		//pacmanAgent
+		gameAgents.pacmanAgent = new PacmanAgent('pacman', 13, 17, 'url(#pacman-pattern)', space);
+		gameAgents.pacmanAgent.draw();
+
+		//binds pacman's movement
+		gameAgents.pacmanAgent.bindMove(function onPacmanMove(e){
+			window.setTimeout(function(){
+				gameAgents.pacDots.removeItem(e.detail.state.x, e.detail.state.y);
+			}, 200);
+		});
+
+		// Add Pacdots
+		gameAgents.pacDots = new AgentCollection(space);
+
+		// Insert pacdots in the maze
+		for (var i=0; i < pacDotsData.length; i++) {
+			var x = pacDotsData[i].x;
+			var y = pacDotsData[i].y;
+			var pacdot = new Meal('pac-dot', 10, x, y, 'url(#pacdot-pattern)', space);
+			gameAgents.pacDots.insert(pacdot);
+			pacdot.draw();
+		}
+
+	}
+
+
+	return space;
+}
+
 Space.prototype.bindKeyEvents = function() {
 	var space = this;
 	var gameOn = false;
@@ -24,7 +70,7 @@ Space.prototype.bindKeyEvents = function() {
 		var evt = e ? e : event;
 		keyCode = evt.keyCode;
 
-		if (KEY_ACTIONS[keyCode] && (!keyPressed || keyPressed !== keyCode) && pacmanAgent) {
+		if (KEY_ACTIONS[keyCode] && (!keyPressed || keyPressed !== keyCode) && gameAgents.pacmanAgent) {
 			evt.preventDefault();
 			keyAction = KEY_ACTIONS[keyCode];
 			nextAction = ACTIONS[keyAction];
@@ -34,41 +80,40 @@ Space.prototype.bindKeyEvents = function() {
 
 				var move = function () {
 //						console.log(keyAction);
-					var nextState = pacmanAgent.state.add(nextAction.state);
+					var nextState = gameAgents.pacmanAgent.state.add(nextAction.state);
 
-					var path = space.moveFromTo(pacmanAgent.element, pacmanAgent.state, nextState);
+					var path = space.moveFromTo(gameAgents.pacmanAgent.element, gameAgents.pacmanAgent.state, nextState);
 
 					if (path.length > 0) {
 						previousAction = nextAction;
 					} else if (previousAction) {
 
-						nextState = pacmanAgent.state.add(previousAction.state);
+						nextState = gameAgents.pacmanAgent.state.add(previousAction.state);
 
-						path = space.moveFromTo(pacmanAgent.element, pacmanAgent.state, nextState);
+						path = space.moveFromTo(gameAgents.pacmanAgent.element, gameAgents.pacmanAgent.state, nextState);
 					}
 
-					if (pacmanAgent.element && path.length > 0) {
+					if (gameAgents.pacmanAgent.element && path.length > 0) {
 
 						for (var i = 0; i < path.length-1; i++) {
 							var node = path[i];
 							var toX = String(nextState.x*space.scale+space.border);
 							var toY = String(nextState.y*space.scale+space.border);
 
-							pacmanAgent.element.style.transform = 'translate('+toX+'px, '+toY+'px)';
+							gameAgents.pacmanAgent.element.style.transform = 'translate('+toX+'px, '+toY+'px)';
 
-							pacmanAgent.animateSprite(node.action);
+							gameAgents.pacmanAgent.animateSprite(node.action);
 
-							pacmanAgent.state = nextState;
+							gameAgents.pacmanAgent.state = nextState;
 
-							pacmanAgent.broadcast('move', pacmanAgent)
+							gameAgents.pacmanAgent.broadcast('move', gameAgents.pacmanAgent)
 						}
 
-
-						window.setTimeout(move, 250);
+						interval = window.setTimeout(move, 200);
 						return true;
 					} else {
 						gameOn = false;
-						pacmanAgent.stopSpriteAnimation();
+						gameAgents.pacmanAgent.stopSpriteAnimation();
 						return false;
 					}
 				};
@@ -88,19 +133,7 @@ Space.prototype.bindKeyEvents = function() {
 
 	function onKeyUp (e) {
 		var evt = e ? e : event;
+		evt.preventDefault();
 		keyPressed = null;
 	};
 };
-
-
-gameAgents.bindPacmanMove = function(){
-	pacmanAgent.on('move', onPacmanMove);
-
-
-	function onPacmanMove(e){
-		console.log(e.detail);
-		window.setTimeout(function(){
-			gameAgents.pacDots.remove(e.detail.state.x, e.detail.state.y);
-		}, 200);
-	}
-}
