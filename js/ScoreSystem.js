@@ -4,12 +4,11 @@
 
 function ScoreSystem(){
 	this.total = 0;
-	this.pacDots = [];
-	this.powerPallets = [];
-	this.vulnerableGhosts = [];
 
 }
 
-ScoreSystem.prototype.count = function (agents) {
 
-};
+ScoreSystem.prototype.addScore = function(value) {
+	this.total = value;
+	console.log(this.total);
+}

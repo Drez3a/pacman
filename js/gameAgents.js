@@ -62,31 +62,42 @@ AgentCollection.prototype.constructor = AgentCollection;
 AgentCollection.prototype = Object.create(Queue.prototype);
 
 AgentCollection.prototype.getTotalValue = function() {
-	return this.queue.length * this.queue.first().value;
+	if (!this.isEmpty()) {
+		return this.queue.length * this.head().value;
+	}
+	return 0;
 };
 
 AgentCollection.prototype.removeItem = function(x, y) {
 	var self = this;
 	var point = new Point(x, y);
+	var auxItem = -1;
 	this.queue = this.queue.filter(function (item) {
 		if (item.state.equalsTo(point)) {
+			auxItem = item;
 			self.removeDOMElement(item.element);
 			return false;
 		}
 		return true;
 	});
-};
+	return auxItem;
+}
 
-AgentCollection.prototype.eat = function(item) {
-	var item = this.remove(item.x, item.y);
+AgentCollection.prototype.eat = function(x, y) {
+	var item = this.remove(x, y);
 	if (item !== -1) {
 		this.removeDOMElement(item.element);
+		return item;
 	}
+	return -1;
 };
 
 AgentCollection.prototype.remove = function(x, y) {
 	var index = this.getIndex(x,y);
-	return this.queue.splice(index, 1)[0];
+	if (index !== -1){
+		return this.queue.splice(index, 1)[0];
+	}
+	return -1;
 };
 
 AgentCollection.prototype.removeDOMElement = function(element){
@@ -121,6 +132,10 @@ AgentCollection.prototype.draw = function () {
 	}
 };
 
+AgentCollection.prototype.size = function () {
+
+	return this.queue.length;
+};
 
 
 //Power Pellet - 50 points. [TODO]
@@ -132,7 +147,7 @@ AgentCollection.prototype.draw = function () {
 //#3 in succession - 800 points. [TODO]
 //#4 in succession - 1600 points. [TODO]
 //Fruit:
-//Cherry: 100 points. [TODO]
+//	Cherry: 100 points. [TODO]
 //Strawberry: 300 points [TODO]
 //Orange: 500 points [TODO]
 //Apple: 700 points [TODO]
@@ -140,4 +155,3 @@ AgentCollection.prototype.draw = function () {
 //Galxian Boss: 2000 points [TODO]
 //Bell: 3000 points [TODO]
 //Key: 5000 points [TODO]
-

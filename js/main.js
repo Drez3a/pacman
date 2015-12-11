@@ -17,20 +17,35 @@ function startSpace() {
 		space.bindKeyEvents();
 		space.drawWalls();
 
+		// init ScoreSystem
+
+		gameAgents.scoreSystem = new ScoreSystem();
+
 		//pacmanAgent
 		gameAgents.pacmanAgent = new PacmanAgent('pacman', 13, 17, 'url(#pacman-pattern)', space);
 		gameAgents.pacmanAgent.draw();
 
-		//binds pacman's movement
+		//Event, binds pacman's movement
 		gameAgents.pacmanAgent.bindMove(function onPacmanMove(e){
 			window.setTimeout(function(){
-				gameAgents.pacDots.removeItem(e.detail.state.x, e.detail.state.y);
-				gameAgents.powerPallets.removeItem(e.detail.state.x, e.detail.state.y);
-			}, 250);
+				var pacDotsEaten = gameAgents.pacDots.removeItem(e.detail.state.x, e.detail.state.y);
+				if (pacDotsEaten !== -1) {
+					gameAgents.pacDotsEaten.insert(pacDotsEaten);
+				}
+				//powerPallets
+				var powerPalletsEaten = gameAgents.powerPallets.removeItem(e.detail.state.x, e.detail.state.y);
+				if (powerPalletsEaten !== -1) {
+					gameAgents.powerPalletsEaten.insert(powerPalletsEaten);
+				}
+
+				gameAgents.scoreSystem.addScore(gameAgents.pacDotsEaten.getTotalValue()+gameAgents.powerPalletsEaten.getTotalValue());
+			}, 200);
 		});
 
 		// Add Pacdots
 		gameAgents.pacDots = new AgentCollection(space);
+
+		gameAgents.pacDotsEaten = new AgentCollection(space);
 
 		// Insert pacdots in the maze
 		if (pacDotsData) {
@@ -46,12 +61,14 @@ function startSpace() {
 		// Add PowerPellet
 		gameAgents.powerPallets = new AgentCollection(space);
 
+		gameAgents.powerPalletsEaten = new AgentCollection(space);
+
 		// Insert powerpellets in the maze
 		if (powerPelletsData) {
 			for (var i=0; i < powerPelletsData.length; i++) {
 				var x = powerPelletsData[i].x;
 				var y = powerPelletsData[i].y;
-				var powerpellet = new Meal('power-pellet', 10, x, y, 'url(#powerpellet-pattern)', space);
+				var powerpellet = new Meal('power-pellet', 50, x, y, 'url(#powerpellet-pattern)', space);
 				gameAgents.powerPallets.insert(powerpellet);
 				powerpellet.draw();
 			}
@@ -122,8 +139,9 @@ Space.prototype.bindKeyEvents = function() {
 
 							gameAgents.pacmanAgent.state = nextState;
 
-							gameAgents.pacmanAgent.broadcast('move', gameAgents.pacmanAgent)
+
 						}
+						gameAgents.pacmanAgent.broadcast('move', gameAgents.pacmanAgent);
 
 						interval = window.setTimeout(move, 200);
 						return true;
