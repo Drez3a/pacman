@@ -1,19 +1,15 @@
 fileFormatVersion: 2
-guid: 8d95e401f29384891b48c5362a020481
+guid: 84c5794ed21d14df3ac824195c5e5e7a
 TextureImporter:
   fileIDToRecycleName:
-    21300000: pacman 1_0
-    21300002: pacman 1_1
-    21300004: pacman 1_2
-    21300006: pacman 1_3
-    21300008: pacman 1_4
-    21300010: pacman 1_5
-    21300012: pacman 1_6
-    21300014: pacman 1_7
-    21300016: pacman 1_8
-    21300018: pacman 1_9
-    21300020: pacman 1_10
-    21300022: pacman 1_11
+    21300000: pinky_0
+    21300002: pinky_1
+    21300004: pinky_2
+    21300006: pinky_3
+    21300008: pinky_4
+    21300010: pinky_5
+    21300012: pinky_6
+    21300014: pinky_7
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -107,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pacman 1_0
+      name: pinky_0
       rect:
         serializedVersion: 2
         x: 0
@@ -121,13 +117,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e07d3fbd7aa64810b6aa6af3ce85be7
+      spriteID: bcfe8120a08be4df18011e96746fd6d4
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pacman 1_1
+      name: pinky_1
       rect:
         serializedVersion: 2
         x: 16
@@ -141,33 +137,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab00f826bf1804b7fa1c40067e3664d8
+      spriteID: 2e920dc1e78db4e3fafbf8322a71ebd5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pacman 1_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d623524b293664456a06a0aac32fc625
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pacman 1_3
+      name: pinky_2
       rect:
         serializedVersion: 2
         x: 0
@@ -181,13 +157,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bcc8d5571075a4de8bb1e2e212df5a0b
+      spriteID: 686ee49e279134879a12b6408be301be
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pacman 1_4
+      name: pinky_3
       rect:
         serializedVersion: 2
         x: 16
@@ -201,33 +177,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bea2f39c548814818905b198e95b2b5b
+      spriteID: eafee9f3ca69b4001bf64abfa3f70b2c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pacman 1_5
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 84c9dbaa6e1a145c2b6054f14b7a2c85
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pacman 1_6
+      name: pinky_4
       rect:
         serializedVersion: 2
         x: 0
@@ -241,13 +197,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 53d7e511fc3e549509096bc12946c1a6
+      spriteID: 7c32a7d2824024a31bd7cd8d58468c88
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pacman 1_7
+      name: pinky_5
       rect:
         serializedVersion: 2
         x: 16
@@ -261,33 +217,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fcdff44dc83be4fe59349b76ccf9ff73
+      spriteID: ba57ca992d76f4d2f830c6f07dce6fb2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pacman 1_8
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 190b7dad59e3747628777666a3c8a0f4
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pacman 1_9
+      name: pinky_6
       rect:
         serializedVersion: 2
         x: 0
@@ -301,13 +237,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b4a483d4d7ac4c53a0ac1e249bd4b2a
+      spriteID: f5aef6b2574554968bfb4f790b33524b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pacman 1_10
+      name: pinky_7
       rect:
         serializedVersion: 2
         x: 16
@@ -321,27 +257,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c88470b121d5f4559b18ec59e70f8617
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pacman 1_11
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4dea0dfc07c5a4520a2d14277ffa2453
+      spriteID: d2105a1d2ce7c4183890cc8361b19a42
       vertices: []
       indices: 
       edges: []
@@ -349,7 +265,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: cedbd98a00a1d4e07b441c8338b55715
+    spriteID: bac13c6fd5348433884fcc9881a7ae96
     vertices: []
     indices: 
     edges: []
